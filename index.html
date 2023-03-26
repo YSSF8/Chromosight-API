@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chromosight Playground</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" integrity="sha512-bgHRAiTjGrzHzLyKOnpFvaEpGzJet3z4tZnXGjpsCcqOnAH6VGUx9frc5bcIhKTVLEiCO6vEhNAgx5jtLUYrfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css" integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+<body>
+    <center>
+        <img src="./logo.png" class="logo" height="100" alt="">
+        <h1>Chromosight Playground</h1>
+        <p>Input an image URL to get the most dominant colors, read the Chromosight <a href="https://github.com/YSSF8/Chromosight-API" target="_blank">docs</a> for more</p>
+        <input type="text" placeholder="Image URL...">
+        <button class="submit">Submit</button>
+        <br>
+        <br>
+        <img src="" height="300" class="output" alt="">
+        <br>
+        <div class="colors"></div>
+        <pre class="json"><code align="left"></code></pre>
+        <div class="clipboard-text">Copy to clipboard: <span></span></div>
+    </center>
+    <script src="./main.js"></script>
+</body>
+</html>

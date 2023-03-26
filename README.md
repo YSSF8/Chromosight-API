@@ -74,6 +74,10 @@ This will return a JSON response containing the URL of the image, and an array o
 }
 ```
 
+## Playground
+
+Try out the Chromosight API on our playground website to see how it extracts the most dominant colors from an image in real-time. Click <a href="https://yssf8.github.io/Chromosight-API/">here</a> to access the playground.
+
 ## Dependencies
 
 * Flask

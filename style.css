@@ -63,6 +63,8 @@ button:hover {
     border: 1px solid #565869;
     border-radius: 8px;
     width: max-content;
+    height: 5.5in;
+    overflow: auto;
 }
 
 .hljs-attr,
@@ -80,4 +82,17 @@ a:hover {
 
 br {
     user-select: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #565869;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #626475;
 }

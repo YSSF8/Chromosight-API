@@ -17,6 +17,7 @@ button {
     background-color: #40414e;
     border-radius: 8px;
     min-width: 3.5in;
+    margin-bottom: 5px;
 }
 
 button {
@@ -121,4 +122,10 @@ br {
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #626475;
+}
+
+@media only screen and (max-width: 600px) {
+    input {
+        min-width: 2.5in;
+    }
 }

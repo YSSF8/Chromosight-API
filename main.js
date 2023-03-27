@@ -11,7 +11,6 @@ submit.addEventListener('click', () => {
     fetch(`https://chromosight-api.darksidex37.repl.co/?image=${input.value}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             output.src = data.image;
 
             for (let i = 0; i < data.colors.length; i++) {

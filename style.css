@@ -16,7 +16,7 @@ button {
     border: 1px solid #565869;
     background-color: #40414e;
     border-radius: 8px;
-    min-width: 4in;
+    min-width: 3.5in;
 }
 
 button {
@@ -35,15 +35,20 @@ button:hover {
     margin-bottom: 7px;
 }
 
+.output {
+    max-height: 250px;
+}
+
 .colors {
     display: inline-flex;
+    flex-wrap: wrap;
 }
 
 .colors div {
     width: 4rem;
     height: 2rem;
     border-radius: 8px;
-    margin-right: 5px;
+    margin: 0 5px 5px 0;
     cursor: pointer;
 }
 
@@ -58,11 +63,32 @@ button:hover {
     display: none;
 }
 
+.code-snippet {
+    position: relative;
+    max-width: max-content;
+}
+
+.code-snippet svg {
+    height: 25px;
+    padding: 7px;
+    width: max-content;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 8px;
+    transition: background 200ms;
+}
+
+.code-snippet svg:hover {
+    background-color: #37383f;
+}
+
 .hljs {
     background-color: #444653 !important;
     border: 1px solid #565869;
     border-radius: 8px;
-    width: max-content;
+    max-width: max-content;
     height: 5.5in;
     overflow: auto;
 }

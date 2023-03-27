@@ -3,9 +3,12 @@ const submit = document.querySelector('.submit');
 const output = document.querySelector('.output');
 const colors = document.querySelector('.colors');
 const clipboardText = document.querySelector('.clipboard-text');
+const historyIcon = document.querySelector('.history');
 const codeSnippet = document.querySelector('.code-snippet')
 const codeJson = codeSnippet.querySelector('.json');
 const codeViewer = codeJson.querySelector('code');
+
+let history = [];
 
 submit.addEventListener('click', () => {
     fetch(`https://chromosight-api.darksidex37.repl.co/?image=${input.value}`)
@@ -59,6 +62,9 @@ submit.addEventListener('click', () => {
 
             codeViewer.textContent = JSON.stringify(data, null, 2);
             hljs.highlightAll();
+
+            history.push(output.src);
+            localStorage.setItem('history', JSON.stringify(history));
         })
         .catch(error => {
             input.value = `<div>${error}</div>`;
@@ -67,4 +73,73 @@ submit.addEventListener('click', () => {
 
 input.addEventListener('keyup', e => {
     if (e.key == 'Enter') submit.click();
+});
+
+historyIcon.addEventListener('click', () => {
+    const historyPanel = document.createElement('div');
+    historyPanel.innerHTML = `
+        <div>History:</div>
+        <br>
+        <div class="close">X</div>
+    `;
+
+    setTimeout(() => historyPanel.style.left = 0);
+
+    let history = [];
+    if (localStorage.getItem('history')) {
+        history = JSON.parse(localStorage.getItem('history'));
+    }
+
+    historyPanel.className = 'history-panel';
+
+    if (history.length > 0) {
+        const historyContainer = document.createElement('div');
+        historyContainer.className = 'history-container';
+
+        history.forEach(item => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+
+            const historyImg = document.createElement('img');
+            historyImg.src = item;
+            historyImg.alt = '';
+            historyItem.appendChild(historyImg);
+            historyContainer.appendChild(historyItem);
+
+            historyImg.addEventListener('click', () => {
+                input.value = historyImg.src;
+                setTimeout(() => submit.click(), 200);
+
+                historyPanel.removeAttribute('style');
+                setTimeout(() => historyPanel.remove(), 200);
+            });
+        });
+
+        historyPanel.appendChild(historyContainer);
+
+        const clearButtonCenter = document.createElement('center');
+        historyPanel.appendChild(clearButtonCenter);
+
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'CLEAR';
+        clearButtonCenter.appendChild(clearButton);
+
+        clearButton.addEventListener('click', () => {
+            historyContainer.querySelectorAll('.history-item').forEach(item => {
+                item.remove();
+            });
+
+            history = [];
+            localStorage.removeItem('history');
+        });
+    } else {
+        historyPanel.innerHTML += '<center>Nothing to view</center>';
+    }
+
+    document.body.appendChild(historyPanel);
+
+    historyPanel.querySelector('.close').addEventListener('click', () => {
+        historyPanel.removeAttribute('style');
+        setTimeout(() => historyPanel.remove(), 200);
+    });
 });

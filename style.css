@@ -75,7 +75,7 @@ button {
 }
 
 .history-panel .close:hover {
-    background-color: rgba(187, 187, 187, 0.1);
+    background-color: var(--close-over);
 }
 
 .history-panel img {
@@ -128,6 +128,7 @@ button:hover {
 
 .output {
     max-height: 250px;
+    cursor: zoom-in;
 }
 
 .colors {
@@ -151,7 +152,61 @@ button:hover {
     width: max-content;
     pointer-events: none;
     position: fixed;
-    display: none;
+    opacity: 0;
+    transform: scale(.9);
+    transition: 200ms;
+    transition-property: transform, opacity;
+}
+
+.image-preview {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 200ms;
+}
+
+.image-preview .close {
+    border: 1px solid var(--light-txt);
+    padding: 7px;
+    user-select: none;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 200ms;
+}
+
+.image-preview .close:hover {
+    background-color: var(--close-over);
+}
+
+.image-preview .close::after {
+    content: 'ESC';
+    position: absolute;
+    top: 32px;
+    pointer-events: none;
+    color: var(--light-txt);
+}
+
+.image-preview img {
+    border-radius: 8px;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(.8);
+    transition: transform 200ms;
 }
 
 .code-snippet {
@@ -237,10 +292,20 @@ br {
     --light-txt: #bbb;
     --def-color: #eee;
     --err-color: #e65959;
+    --close-over: rgba(187, 187, 187, 0.1);
 }
 
 @media only screen and (max-width: 600px) {
     input {
         min-width: 2.5in;
+    }
+    .output {
+        max-height: 200px;
+    }
+    .image-preview .close::after {
+        content: '';
+    }
+    .image-preview img {
+        height: 225px;
     }
 }

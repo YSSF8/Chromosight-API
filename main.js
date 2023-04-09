@@ -3,7 +3,6 @@ const submit = document.querySelector('.submit');
 const output = document.querySelector('.output');
 const errorOutput = document.querySelector('.error-output');
 const colors = document.querySelector('.colors');
-const clipboardText = document.querySelector('.clipboard-text');
 const historyIcon = document.querySelector('.history');
 const codeSnippet = document.querySelector('.code-snippet')
 const codeJson = codeSnippet.querySelector('.json');
@@ -11,6 +10,7 @@ const codeViewer = codeJson.querySelector('code');
 const themeSelector = document.querySelector('.theme');
 
 let history = JSON.parse(localStorage.getItem('history')) || [];
+let clipboardTextLimiter = 0;
 
 submit.addEventListener('click', () => {
     if (input.value != '') {
@@ -18,31 +18,44 @@ submit.addEventListener('click', () => {
             .then(res => res.json())
             .then(data => {
                 output.src = data.image;
-    
+
                 for (let i = 0; i < data.colors.length; i++) {
                     const color = document.createElement('div');
                     color.style.backgroundColor = data.colors[i].hex;
                     colors.appendChild(color);
-    
+                    
                     color.addEventListener('click', () => {
                         navigator.clipboard.writeText(data.colors[i].hex);
                     });
-    
-                    color.addEventListener('mousemove', e => {
-                        const x = e.clientX, y = e.clientY;
-    
-                        clipboardText.querySelector('span').innerHTML = data.colors[i].hex;
-    
-                        clipboardText.style.display = 'block';
-                        clipboardText.style.left = (x - 2) + 'px';
-                        clipboardText.style.top = (y - 45) + 'px';
+
+                    color.addEventListener('mousemove', () => {
+                        clipboardTextLimiter++;
+                        
+                        const clipboardText = document.createElement('div');
+                        clipboardText.innerHTML = `Copy to clipboard: ${data.colors[i].hex}`;
+                        clipboardText.classList.add('clipboard-text');
+
+                        const rect = color.getBoundingClientRect();
+
+                        clipboardText.style.left = `${rect.x - rect.width * 2 + 40}px`;
+                        clipboardText.style.top = `${rect.y - 40}px`;
+
+                        document.body.appendChild(clipboardText);
+
+                        setTimeout(() => {
+                            clipboardText.style.opacity = 1;
+                            clipboardText.style.transform = 'scale(1)';
+                        });
+                        
+                        if (clipboardTextLimiter > 1) clipboardText.remove();
                     });
-    
+
                     color.addEventListener('mouseout', () => {
-                        clipboardText.removeAttribute('style');
+                        document.querySelector('.clipboard-text').remove();
+                        clipboardTextLimiter = 0;
                     });
                 }
-    
+
                 const copyCode = document.createElement('div');
                 copyCode.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
@@ -58,14 +71,14 @@ submit.addEventListener('click', () => {
                 `;
                 copyCode.title = 'Copy response';
                 codeSnippet.insertBefore(copyCode, codeJson);
-    
+
                 copyCode.addEventListener('click', () => {
                     navigator.clipboard.writeText(codeViewer.textContent);
                 });
-    
+
                 codeViewer.textContent = JSON.stringify(data, null, 2);
                 hljs.highlightAll();
-    
+
                 history.push(output.src);
                 localStorage.setItem('history', JSON.stringify(history));
 
@@ -79,6 +92,34 @@ submit.addEventListener('click', () => {
 
 input.addEventListener('keyup', e => {
     if (e.key == 'Enter') submit.click();
+});
+
+output.addEventListener('click', () => {
+    const imagePreview = document.createElement('div');
+    imagePreview.classList.add('image-preview');
+    imagePreview.innerHTML = `
+    <div class="close">X</div>
+    <img src="${output.src}" alt="">
+    `;
+    document.body.appendChild(imagePreview);
+
+    const img = imagePreview.querySelector('img');
+    const close = imagePreview.querySelector('.close');
+
+    setTimeout(() => {
+        imagePreview.style.opacity = 1;
+        img.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+
+    close.addEventListener('click', () => {
+        imagePreview.style.opacity = 0;
+        img.style.transform = 'translate(-50%, -50%) scale(.8)';
+        setTimeout(() => imagePreview.remove(), 200);
+    });
+
+    document.addEventListener('keyup', e => {
+        if (e.key == 'Escape') close.click();
+    });
 });
 
 historyIcon.addEventListener('click', () => {
@@ -166,11 +207,11 @@ const themeVariables = {
     light: {
         '--bg': '#fff',
         '--sec-bg': '#f4f4f4',
-        '--thr-bg': '#fff',
-        '--bright-gry': '#f4f4f4',
-        '--brighter-gry': '#eee',
-        '--brightest-gry': '#fff',
-        '--hstr-bg': '#f4f4f4',
+        '--thr-bg': '#f5f5f5',
+        '--bright-gry': '#f7f7f7',
+        '--brighter-gry': '#f8f8f8',
+        '--brightest-gry': '#f9f9f9',
+        '--hstr-bg': '#f9f9f9',
         '--hstr-sb': '#ddd',
         '--hstr-sb-over': '#ccc',
         '--blue': '#0077c2',

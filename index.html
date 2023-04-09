@@ -11,18 +11,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css" integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbbbbb" height="25" viewBox="0 0 32 32" class="history">
-        <path d="M16,17a1,1,0,0,0,1-1V6.45a1,1,0,1,0-2,0V15H11.91a1,1,0,0,0,0,2Z"/>
-        <path d="M16,0A16.06,16.06,0,0,0,2,8.27V6.45a1,1,0,0,0-2,0v5.46a1,1,0,0,0,1,1H6.45a1,1,0,0,0,0-2H3A14,14,0,1,1,2,16a1,1,0,0,0-2,0A16,16,0,1,0,16,0Z"/>
-    </svg>
+    <div class="header">
+        <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 32 32" class="history">
+            <title>History</title>
+            <path d="M16,17a1,1,0,0,0,1-1V6.45a1,1,0,1,0-2,0V15H11.91a1,1,0,0,0,0,2Z"/>
+            <path d="M16,0A16.06,16.06,0,0,0,2,8.27V6.45a1,1,0,0,0-2,0v5.46a1,1,0,0,0,1,1H6.45a1,1,0,0,0,0-2H3A14,14,0,1,1,2,16a1,1,0,0,0-2,0A16,16,0,1,0,16,0Z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 24 24" class="theme"
+            aria-labelledby="nightModeIconTitle" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" fill="none" color="#000000">
+            <title id="nightModeIconTitle">Theme</title>
+            <path d="M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14z" />
+            <path d="M15.899 12.899a4 4 0 0 1-4.797-4.797A4.002 4.002 0 0 0 12 16c1.9 0 3.49-1.325 3.899-3.101z" />
+            <path d="M12 5V3M12 21v-2" />
+            <path
+                d="M5 12H2h3zM22 12h-3 3zM16.95 7.05L19.07 4.93 16.95 7.05zM4.929 19.071L7.05 16.95 4.93 19.07zM16.95 16.95l2.121 2.121-2.121-2.121zM4.929 4.929L7.05 7.05 4.93 4.93z" />
+        </svg>
+    </div>
     <center>
         <img src="./logo.png" class="logo" height="100" alt="">
         <h2>Chromosight Playground</h2>
-        <p>Input an image URL to get the most dominant colors, read the Chromosight <a href="https://github.com/YSSF8/Chromosight-API" target="_blank">docs</a> for more</p>
+        <p>Input an image URL to get the most dominant colors, read the <a href="https://github.com/YSSF8/Chromosight-API" target="_blank">Chromosight</a> docs for more</p>
         <input type="text" placeholder="Image URL...">
         <button class="submit">Submit</button>
         <br>
         <br>
+        <div class="error-output"></div>
         <img src="" height="300" class="output" alt="">
         <br>
         <div class="colors"></div>
